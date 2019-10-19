@@ -13,8 +13,9 @@ white = (255,255,255)
 
 clock = pygame.time.Clock()
 crashed = False
-carImg_filepath = 'images/racecar.png'
+carImg_filepath = 'images/LogoMakr_0rPhIj.png'
 carImg = pygame.image.load(carImg_filepath)
+carImg = pygame.transform.rotozoom(carImg, 0, 0.125)
 
 def car(x,y):
     gameDisplay.blit(carImg, (x,y))
@@ -52,7 +53,7 @@ while not crashed:
     x += x_change
     y += y_change
    ##
-    gameDisplay.fill(white)
+    gameDisplay.fill(black)
     car(x,y)
 
     pygame.display.update()
