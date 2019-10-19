@@ -19,6 +19,10 @@ enemy_size = 50
 enemy_pos = [random.randint(0,width-enemy_size), 0]
 enemy_list=[enemy_pos]
 
+carImg_filepath = 'images/LogoMakr_0rPhIj.png'
+carImg = pygame.image.load(carImg_filepath)
+carImg = pygame.transform.rotozoom(carImg, 0, 0.125)
+
 speed = 20
 screen = pygame.display.set_mode((width,height))
 
@@ -29,6 +33,9 @@ score = 0
 clock = pygame.time.Clock()
 
 myfont = pygame.font.SysFont("monospace", 35)
+
+def car(x,y):
+    screen.blit(carImg,(x,y))
 
 def set_level(score,speed):
     if score < 20:
@@ -121,7 +128,8 @@ while not game_over:
 
 
     #rect(surface, color, rect, width=0) -> Rect
-    pygame.draw.rect(screen, red, (player_pos[0], player_pos[1], player_size, player_size))
+    # pygame.draw.rect(screen, red, (player_pos[0], player_pos[1], player_size, player_size))
+    car(player_pos[0], player_pos[1])
 
     clock.tick(30)
 
