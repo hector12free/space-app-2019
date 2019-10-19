@@ -8,6 +8,9 @@ https://2019.spaceappschallenge.org/challenges/stars/orbital-scrap-metal-the-vid
 
 # TODOs
 - [ ] avoid game window close when starship collides with space junk
+- [ ] level 1
+- [ ] level 2
+
 
 # Reference
 * https://2019.spaceappschallenge.org/challenges/
