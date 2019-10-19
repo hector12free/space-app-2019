@@ -11,6 +11,11 @@ https://2019.spaceappschallenge.org/challenges/stars/orbital-scrap-metal-the-vid
 - [ ] level 1
 - [ ] level 2
 
+- [ ] add window title
+```python
+pygame.display.set_caption("The Best Game Window Title");
+```
+
 
 # Reference
 * https://2019.spaceappschallenge.org/challenges/
