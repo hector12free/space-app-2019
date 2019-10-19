@@ -6,5 +6,8 @@ We are working on this challenge: "Orbital Scrap Metal — The Video Game".
 
 https://2019.spaceappschallenge.org/challenges/stars/orbital-scrap-metal-the-video-game/details
 
+# TODOs
+- [ ] avoid game window close when starship collides with space junk
+
 # Reference
 * https://2019.spaceappschallenge.org/challenges/
