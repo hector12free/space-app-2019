@@ -23,6 +23,10 @@ carImg_filepath = 'images/LogoMakr_0rPhIj.png'
 carImg = pygame.image.load(carImg_filepath)
 carImg = pygame.transform.rotozoom(carImg, 0, 0.125)
 
+rockImg_filepath = 'images/spaceJunk1.png'
+rockImg = pygame.image.load(rockImg_filepath)
+rockImg = pygame.transform.rotozoom(rockImg, 0, 0.125)
+
 speed = 20
 screen = pygame.display.set_mode((width,height))
 
@@ -36,6 +40,8 @@ myfont = pygame.font.SysFont("monospace", 35)
 
 def car(x,y):
     screen.blit(carImg,(x,y))
+def rock(x,y):
+    screen.blit(rockImg,(x,y))
 
 def set_level(score,speed):
     if score < 20:
@@ -59,7 +65,8 @@ def drop_enemies(enemy_list):
 
 def draw_enemies(enemy_list):
     for enemy_pos in enemy_list:
-        pygame.draw.rect(screen,blue, (enemy_pos[0], enemy_pos[1], enemy_size, enemy_size))
+        rock(enemy_pos[0], enemy_pos[1])
+#        pygame.draw.rect(screen,blue, (enemy_pos[0], enemy_pos[1], enemy_size, enemy_size))
 
 # update the position of the enemy
 def update_enemey_positions(enemy_list, score):
