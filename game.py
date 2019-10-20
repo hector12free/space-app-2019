@@ -1,8 +1,9 @@
 import pygame
 import random
 import sys
+from button import button
 
-level = 2; # TODO leve initial should be 1
+level = 2 # TODO leve initial should be 1
 
 pygame.init()
 
@@ -10,9 +11,13 @@ pygame.init()
 width = 800
 height = 600
 
-red = (255,0,0)
+red = (197, 38, 32) # (255,0,0)
+redDark = (154, 30, 25)
 blue = (0,0,255)
 yellow = (255,255,0)
+# green = (0, 200, 0)
+green = (36, 194, 179)
+greenDark = (28, 151, 139)
 background_color = (0,0,0)
 
 # Starship
@@ -111,6 +116,44 @@ def detect_collision(player_pos, enemy_pos):
         if (e_y >= p_y and e_y < (p_y + player_size)) or (p_y >= e_y and p_y < (e_y+enemy_size)):
             return True
     return False
+
+def redrawWindow():
+    screen.fill((255,255,255))
+    startBtn.draw(screen, (0,0,0))
+    quitBtn.draw(screen, (0,0,0))
+
+stayAtHomePage = True
+startBtn = button(green, width/3, height*2/3, 120, 50, 'Start')
+quitBtn = button(red, width*2/3, height*2/3, 120, 50, 'Close')
+
+while stayAtHomePage:
+    redrawWindow()
+    pygame.display.update()
+
+    for event in pygame.event.get():
+        pos = pygame.mouse.get_pos()
+        if event.type == pygame.QUIT:
+            stayAtHomePage = False
+            pygame.quit()
+            quit()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if startBtn.isOver(pos):
+                print("clicked the Button")
+                stayAtHomePage = False
+            elif quitBtn.isOver(pos):
+                print("user decided to quit the game")
+                stayAtHomePage = False
+                pygame.quit()
+                quit()
+        if event.type == pygame.MOUSEMOTION:
+            if startBtn.isOver(pos):
+                startBtn.color = greenDark
+            else:
+                startBtn.color = green
+            if quitBtn.isOver(pos):
+                quitBtn.color = redDark
+            else:
+                quitBtn.color = red
 
 while not game_over:
     for event in pygame.event.get():
