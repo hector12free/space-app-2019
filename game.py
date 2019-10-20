@@ -11,8 +11,13 @@ from button import button
 # TODO display different satellites/collectors/junks
 # TODO 
 
+# Set isDemoMode flag to True to only play with level 2, which is more interesting
+isDemoMode = True
+
 # level 1 - basic; level 2 - with collector
-level = 2 # TODO change it back
+level = 1
+if isDemoMode:
+    level = 2 # TODO change it back
 
 pygame.init()
 pygame.display.set_caption("Space Junk Terminator")
@@ -50,7 +55,7 @@ enemy_pos = [random.randint(0,width-enemy_size), 0]
 enemy_list=[enemy_pos]
 spaceJunkImg_filepath = 'images/spaceJunk1.png'
 spaceJunkImg = pygame.image.load(spaceJunkImg_filepath)
-spaceJunkImg = pygame.transform.rotozoom(spaceJunkImg, 0, 0.125)
+spaceJunkImg = pygame.transform.rotozoom(spaceJunkImg, 0, 0.03)
 
 speed = 20
 screen = pygame.display.set_mode((width,height))
@@ -211,10 +216,9 @@ while True:
         if level > 1: # only clear junk when level > 1
             cleanJunk(enemy_list)
 
-        # TODO change it back
-        # if hasCollisionWithSatellite(enemy_list):
-        #     game_over=True
-        #     break
+        if not isDemoMode and hasCollisionWithSatellite(enemy_list):
+            game_over=True
+            break
 
         draw_enemies(enemy_list)
 
