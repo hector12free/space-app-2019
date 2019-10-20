@@ -11,21 +11,21 @@ pygame.init()
 width = 800
 height = 600
 
+# Colors
 red = (197, 38, 32) # (255,0,0)
 redDark = (154, 30, 25)
 blue = (0,0,255)
 yellow = (255,255,0)
-# green = (0, 200, 0)
-green = (36, 194, 179)
+green = (36, 194, 179) # (0, 200, 0)
 greenDark = (28, 151, 139)
 background_color = (0,0,0)
 
 # Starship
 player_size = 50
 player_pos = [width/2, height-2*player_size]
-carImg_filepath = 'images/LogoMakr_0rPhIj.png' 
-carImg = pygame.image.load(carImg_filepath)
-carImg = pygame.transform.rotozoom(carImg, 0, 0.125)
+collectorImg_filepath = 'images/LogoMakr_0rPhIj.png' 
+collectorImg = pygame.image.load(collectorImg_filepath)
+collectorImg = pygame.transform.rotozoom(collectorImg, 0, 0.125)
 
 # Satellite
 satellite_size = 50
@@ -39,6 +39,11 @@ enemy_size = 50
 enemy_pos = [random.randint(0,width-enemy_size), 0]
 enemy_list=[enemy_pos]
 
+# Space Junk
+spaceJunkImg_filepath = 'images/spaceJunk1.png'
+spaceJunkImg = pygame.image.load(spaceJunkImg_filepath)
+spaceJunkImg = pygame.transform.rotozoom(spaceJunkImg, 0, 0.125)
+
 speed = 20
 screen = pygame.display.set_mode((width,height))
 
@@ -50,8 +55,11 @@ clock = pygame.time.Clock()
 
 myfont = pygame.font.SysFont("monospace", 35)
 
-def car(x,y):
-    screen.blit(carImg,(x,y))
+def collector(x,y):
+    screen.blit(collectorImg,(x,y))
+
+def spaceJunk(x,y):
+    screen.blit(spaceJunkImg,(x,y))
 
 def satellite(x,y):
     screen.blit(satelliteImg,(x,y))
@@ -78,7 +86,8 @@ def drop_enemies(enemy_list):
 
 def draw_enemies(enemy_list):
     for enemy_pos in enemy_list:
-        pygame.draw.rect(screen,blue, (enemy_pos[0], enemy_pos[1], enemy_size, enemy_size))
+        spaceJunk(enemy_pos[0], enemy_pos[1])
+#        pygame.draw.rect(screen,blue, (enemy_pos[0], enemy_pos[1], enemy_size, enemy_size))
 
 # update the position of the enemy
 def update_enemey_positions(enemy_list, score):
@@ -190,7 +199,7 @@ while not game_over:
 
     #rect(surface, color, rect, width=0) -> Rect
     # pygame.draw.rect(screen, red, (player_pos[0], player_pos[1], player_size, player_size))
-    car(player_pos[0], player_pos[1])
+    collector(player_pos[0], player_pos[1])
     satellite(satellite_pos[0], satellite_pos[1])
 
     clock.tick(30)
