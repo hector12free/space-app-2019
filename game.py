@@ -116,7 +116,7 @@ def collision_check(enemy_list, collector_pos, satellite_pos, level):
             if detect_collision(enemy_pos, collector_pos):
                 return True
             return False
-    elif level == 2:
+    else: # level > 1
         for enemy_pos in enemy_list:
             if detect_collision(enemy_pos, satellite_pos):
                 return True
@@ -176,44 +176,48 @@ def drawTransitionPage(continueBtnText):
 
 drawTransitionPage("Start")
 
-while not game_over:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            sys.exit()
+while True:
+    game_over = False
+    score = 0
+    while not game_over:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
 
-        if event.type == pygame.KEYDOWN:
-            x = collector_pos[0]
-            y = collector_pos[1]
+            if event.type == pygame.KEYDOWN:
+                x = collector_pos[0]
+                y = collector_pos[1]
 
-            if event.key == pygame.K_LEFT:
-                x -= collector_size
-            elif event.key == pygame.K_RIGHT:
-                x += collector_size
+                if event.key == pygame.K_LEFT:
+                    x -= collector_size
+                elif event.key == pygame.K_RIGHT:
+                    x += collector_size
 
-            collector_pos = [x,y] 
+                collector_pos = [x,y] 
 
-    screen.fill(background_color)
+        screen.fill(background_color)
 
-    drop_enemies(enemy_list)
-    score = update_enemey_positions(enemy_list, score)
-    speed = set_speed(score, speed)
+        drop_enemies(enemy_list)
+        score = update_enemey_positions(enemy_list, score)
+        speed = set_speed(score, speed)
 
-    text = "Score:" + str(score)
-    label = myfont.render(text, 1, yellow)
-    screen.blit(label,(width-200,height-40))
+        text = "Score:" + str(score)
+        label = myfont.render(text, 1, yellow)
+        screen.blit(label,(width-200,height-40))
 
-    if collision_check(enemy_list, collector_pos, satellite_pos, level):
-        game_over=True
-        break
+        if collision_check(enemy_list, collector_pos, satellite_pos, level):
+            game_over=True
+            break
 
-    draw_enemies(enemy_list)
+        draw_enemies(enemy_list)
 
-    satellite(satellite_pos[0], satellite_pos[1])
-    if (level > 1):
-        collector(collector_pos[0], collector_pos[1])
+        satellite(satellite_pos[0], satellite_pos[1])
+        if (level > 1):
+            collector(collector_pos[0], collector_pos[1])
 
-    clock.tick(30)
+        clock.tick(30)
 
-    pygame.display.update()
+        pygame.display.update()
 
-drawTransitionPage("Next")
+    drawTransitionPage("Next")
+    level += 1
