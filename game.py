@@ -15,6 +15,7 @@ from button import button
 level = 1
 
 pygame.init()
+pygame.display.set_caption("Space Junk Terminator")
 
 # Window width & Height
 width = 800
@@ -141,7 +142,7 @@ def detect_collision(collector_pos, enemy_pos):
     return False
 
 def redrawWindow(continueBtn, quitBtn):
-    screen.fill((255,255,255))
+    screen.fill(background_color)
     continueBtn.draw(screen, (0,0,0))
     quitBtn.draw(screen, (0,0,0))
 
