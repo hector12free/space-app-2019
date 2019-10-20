@@ -80,16 +80,16 @@ def drawSatellite(x,y):
     screen.blit(satelliteImg,(x,y))
 
 def set_speed(score,speed):
-    if score < 20:
-        speed = 20
-    elif score < 40:
-        speed = 25
-    elif score < 60:
-        speed = 30
-    elif score < 80:
-        speed = 40
-    else:
-        speed = speed = score/2+1
+    # if score < 20:
+    #     speed = 20
+    # elif score < 40:
+    #     speed = 25
+    # elif score < 60:
+    #     speed = 30
+    # elif score < 80:
+    #     speed = 40
+    # else:
+    #     speed = speed = score/2+1
     return speed
 
 def drop_enemies(enemy_list):
@@ -102,7 +102,6 @@ def drop_enemies(enemy_list):
 def draw_enemies(enemy_list):
     for enemy_pos in enemy_list:
         drawSpaceJunk(enemy_pos[0], enemy_pos[1])
-#        pygame.draw.rect(screen,blue, (enemy_pos[0], enemy_pos[1], enemy_size, enemy_size))
 
 # update the position of the enemy
 def update_enemey_positions(enemy_list, score):
@@ -113,31 +112,30 @@ def update_enemey_positions(enemy_list, score):
             enemy_list.pop(idx)
             score += 1
     return score
-            # enemy_pos[0]= random.randint(0,width-enemy_size)
-            # enemy_pos[1] = 0
 
 def collision_check(enemy_list, collector_pos, satellite_pos, level):
-    if level == 1:
+    if level > 1:
         for enemy_pos in enemy_list:
-            if detect_collision(enemy_pos, collector_pos):
-                return True
-            return False
-    else: # level > 1
-        for enemy_pos in enemy_list:
-            if detect_collision(enemy_pos, satellite_pos):
-                return True
-            return False
-            
+            if detect_collision(enemy_pos, collector_pos, collector_size):
+                enemy_list.remove(enemy_pos)
+        
+    return hasCollision(enemy_list, satellite_pos, satellite_size)
 
-def detect_collision(collector_pos, enemy_pos):
-    p_x = collector_pos[0]
-    p_y = collector_pos[1]
+def hasCollision(enemy_list, object_pos, object_size):
+    for enemy_pos in enemy_list:
+        if detect_collision(enemy_pos, object_pos, object_size):
+            return True
+    return False
+
+def detect_collision(object_pos, enemy_pos, object_size):
+    p_x = object_pos[0]
+    p_y = object_pos[1]
 
     e_x= enemy_pos[0]
     e_y=enemy_pos[1]
 
-    if (e_x >= p_x and e_x < (p_x + collector_size)) or (p_x >= e_x and p_x < (e_x+enemy_size)):
-        if (e_y >= p_y and e_y < (p_y + collector_size)) or (p_y >= e_y and p_y < (e_y+enemy_size)):
+    if (e_x >= p_x and e_x < (p_x + object_size)) or (p_x >= e_x and p_x < (e_x+enemy_size)):
+        if (e_y >= p_y and e_y < (p_y + object_size)) or (p_y >= e_y and p_y < (e_y+enemy_size)):
             return True
     return False
 
