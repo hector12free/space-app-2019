@@ -29,7 +29,7 @@ green = (36, 194, 179) # (0, 200, 0)
 greenDark = (28, 151, 139)
 background_color = (0,0,0)
 
-# Starship
+# Starship collector
 collector_size = 50
 collector_pos = [width/3, height-2*collector_size]
 collectorImg_filepath = 'images/LogoMakr_0rPhIj.png' 
@@ -43,12 +43,10 @@ satelliteImg_filepath = 'images/satellite.png'
 satelliteImg = pygame.image.load(satelliteImg_filepath)
 satelliteImg = pygame.transform.rotozoom(satelliteImg, 0, 0.125)
 
-# Enemy
+# Enemy - Space Junk
 enemy_size = 50
 enemy_pos = [random.randint(0,width-enemy_size), 0]
 enemy_list=[enemy_pos]
-
-# Space Junk
 spaceJunkImg_filepath = 'images/spaceJunk1.png'
 spaceJunkImg = pygame.image.load(spaceJunkImg_filepath)
 spaceJunkImg = pygame.transform.rotozoom(spaceJunkImg, 0, 0.125)
@@ -64,13 +62,20 @@ clock = pygame.time.Clock()
 
 myfont = pygame.font.SysFont("monospace", 35)
 
-def collector(x,y):
+def initializeStates(collector_pos, satellite_pos, enemy_list):
+    collector_pos = [width/3, height-2*collector_size]
+    satellite_pos = [width/2, height-2*collector_size]
+
+    enemy_pos = [random.randint(0,width-enemy_size), 0]
+    enemy_list=[enemy_pos]
+
+def drawCollector(x,y):
     screen.blit(collectorImg,(x,y))
 
-def spaceJunk(x,y):
+def drawSpaceJunk(x,y):
     screen.blit(spaceJunkImg,(x,y))
 
-def satellite(x,y):
+def drawSatellite(x,y):
     screen.blit(satelliteImg,(x,y))
 
 def set_speed(score,speed):
@@ -95,7 +100,7 @@ def drop_enemies(enemy_list):
 
 def draw_enemies(enemy_list):
     for enemy_pos in enemy_list:
-        spaceJunk(enemy_pos[0], enemy_pos[1])
+        drawSpaceJunk(enemy_pos[0], enemy_pos[1])
 #        pygame.draw.rect(screen,blue, (enemy_pos[0], enemy_pos[1], enemy_size, enemy_size))
 
 # update the position of the enemy
@@ -157,7 +162,7 @@ def drawTransitionPage(continueBtnText):
                 quit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if continueBtn.isOver(pos):
-                    print("clicked the Button")
+                    print("clicked the Button", continueBtnText)
                     stayAtThisPage = False
                 elif quitBtn.isOver(pos):
                     print("user decided to quit the game")
@@ -177,8 +182,6 @@ def drawTransitionPage(continueBtnText):
 drawTransitionPage("Start")
 
 while True:
-    game_over = False
-    score = 0
     while not game_over:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -211,13 +214,20 @@ while True:
 
         draw_enemies(enemy_list)
 
-        satellite(satellite_pos[0], satellite_pos[1])
+        drawSatellite(satellite_pos[0], satellite_pos[1])
         if (level > 1):
-            collector(collector_pos[0], collector_pos[1])
+            drawCollector(collector_pos[0], collector_pos[1])
 
         clock.tick(30)
 
         pygame.display.update()
 
+    # go to game over page with Next & Quit buttons
     drawTransitionPage("Next")
+
+    # when user select Next button, user go to play next level
+    game_over = False
     level += 1
+    # score = 0
+    initializeStates(collector_pos, satellite_pos, enemy_list)
+    print("next level: ", level)
