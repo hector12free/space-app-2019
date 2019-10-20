@@ -2,8 +2,11 @@ import pygame
 import random
 import sys
 
+level = 2; # TODO leve initial should be 1
+
 pygame.init()
 
+# Window width & Height
 width = 800
 height = 600
 
@@ -12,16 +15,24 @@ blue = (0,0,255)
 yellow = (255,255,0)
 background_color = (0,0,0)
 
+# Starship
 player_size = 50
 player_pos = [width/2, height-2*player_size]
+carImg_filepath = 'images/LogoMakr_0rPhIj.png' 
+carImg = pygame.image.load(carImg_filepath)
+carImg = pygame.transform.rotozoom(carImg, 0, 0.125)
 
+# Satellite
+satellite_size = 50
+satellite_pos = [width/3, height-2*player_size]
+satelliteImg_filepath = 'images/satellite.png' 
+satelliteImg = pygame.image.load(satelliteImg_filepath)
+satelliteImg = pygame.transform.rotozoom(satelliteImg, 0, 0.125)
+
+# Enemy
 enemy_size = 50
 enemy_pos = [random.randint(0,width-enemy_size), 0]
 enemy_list=[enemy_pos]
-
-carImg_filepath = 'images/LogoMakr_0rPhIj.png'
-carImg = pygame.image.load(carImg_filepath)
-carImg = pygame.transform.rotozoom(carImg, 0, 0.125)
 
 speed = 20
 screen = pygame.display.set_mode((width,height))
@@ -37,7 +48,10 @@ myfont = pygame.font.SysFont("monospace", 35)
 def car(x,y):
     screen.blit(carImg,(x,y))
 
-def set_level(score,speed):
+def satellite(x,y):
+    screen.blit(satelliteImg,(x,y))
+
+def set_speed(score,speed):
     if score < 20:
         speed = 20
     elif score < 40:
@@ -72,11 +86,19 @@ def update_enemey_positions(enemy_list, score):
     return score
             # enemy_pos[0]= random.randint(0,width-enemy_size)
             # enemy_pos[1] = 0
-def collision_check(enemy_list, player_pos):
-    for enemy_pos in enemy_list:
-        if detect_collision(enemy_pos, player_pos):
-            return True
-        return False
+
+def collision_check(enemy_list, player_pos, satellite_pos, level):
+    if level == 1:
+        for enemy_pos in enemy_list:
+            if detect_collision(enemy_pos, player_pos):
+                return True
+            return False
+    elif level == 2:
+        for enemy_pos in enemy_list:
+            if detect_collision(enemy_pos, satellite_pos):
+                return True
+            return False
+            
 
 def detect_collision(player_pos, enemy_pos):
     p_x = player_pos[0]
@@ -104,23 +126,19 @@ while not game_over:
             elif event.key == pygame.K_RIGHT:
                 x += player_size
 
-            player_pos = [x,y]
+            player_pos = [x,y] 
 
     screen.fill(background_color)
 
-
-    # if detect_collision(player_pos, enemy_pos):
-    #     game_over = True
-    #     break
     drop_enemies(enemy_list)
     score = update_enemey_positions(enemy_list, score)
-    speed = set_level(score, speed)
+    speed = set_speed(score, speed)
 
     text = "Score:" + str(score)
     label = myfont.render(text, 1, yellow)
     screen.blit(label,(width-200,height-40))
 
-    if collision_check(enemy_list, player_pos):
+    if collision_check(enemy_list, player_pos, satellite_pos, level):
         game_over=True
         break
 
@@ -130,6 +148,7 @@ while not game_over:
     #rect(surface, color, rect, width=0) -> Rect
     # pygame.draw.rect(screen, red, (player_pos[0], player_pos[1], player_size, player_size))
     car(player_pos[0], player_pos[1])
+    satellite(satellite_pos[0], satellite_pos[1])
 
     clock.tick(30)
 
