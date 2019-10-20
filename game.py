@@ -12,7 +12,7 @@ from button import button
 # TODO 
 
 # level 1 - basic; level 2 - with collector
-level = 1
+level = 2 # TODO change it back
 
 pygame.init()
 pygame.display.set_caption("Space Junk Terminator")
@@ -187,10 +187,14 @@ while True:
                 x = collector_pos[0]
                 y = collector_pos[1]
 
-                if event.key == pygame.K_LEFT:
+                if event.key == pygame.K_LEFT and x > speed:
                     x -= collector_size
-                elif event.key == pygame.K_RIGHT:
+                elif event.key == pygame.K_RIGHT and x < width - speed - collector_size:
                     x += collector_size
+                elif event.key == pygame.K_UP and y > speed:
+                    y -= collector_size
+                elif event.key == pygame.K_DOWN and y < height - speed - collector_size:
+                    y += collector_size
 
                 collector_pos = [x,y] 
 
@@ -207,9 +211,10 @@ while True:
         if level > 1: # only clear junk when level > 1
             cleanJunk(enemy_list)
 
-        if hasCollisionWithSatellite(enemy_list):
-            game_over=True
-            break
+        # TODO change it back
+        # if hasCollisionWithSatellite(enemy_list):
+        #     game_over=True
+        #     break
 
         draw_enemies(enemy_list)
 
