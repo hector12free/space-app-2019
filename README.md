@@ -16,8 +16,6 @@ conda update conda
 conda create -n pygame python=2.7
 pip install pygame
 conda activate pygame
-# pip uninstall pygame
-pip install pygame
 ```
 
 Note: https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html
