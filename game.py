@@ -3,7 +3,7 @@ import random
 import sys
 from button import button
 
-level = 2 # TODO leve initial should be 1
+level = 1 # level 1 - basic; level 2 - with collector
 
 pygame.init()
 
@@ -200,7 +200,8 @@ while not game_over:
     #rect(surface, color, rect, width=0) -> Rect
     # pygame.draw.rect(screen, red, (player_pos[0], player_pos[1], player_size, player_size))
     collector(player_pos[0], player_pos[1])
-    satellite(satellite_pos[0], satellite_pos[1])
+    if (level == 2):
+        satellite(satellite_pos[0], satellite_pos[1])
 
     clock.tick(30)
 
