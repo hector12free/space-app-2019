@@ -3,7 +3,12 @@ import random
 import sys
 from button import button
 
-level = 2 # level 1 - basic; level 2 - with collector
+# TODO add sound effects
+# TODO avoid game exit when game over
+# TODO add transation page between levels
+
+# level 1 - basic; level 2 - with collector
+level = 1
 
 pygame.init()
 
