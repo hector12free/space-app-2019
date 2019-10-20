@@ -4,8 +4,12 @@ import sys
 from button import button
 
 # TODO add sound effects
-# TODO enhancement: show buttons directly in play pages
 # TODO add transation page between levels
+
+# TODO enhancements:
+# TODO show buttons directly in play pages
+# TODO display different satellites/collectors/junks
+# TODO 
 
 # level 1 - basic; level 2 - with collector
 level = 1
