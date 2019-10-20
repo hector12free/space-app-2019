@@ -113,17 +113,14 @@ def update_enemey_positions(enemy_list, score):
             score += 1
     return score
 
-def collision_check(enemy_list, collector_pos, satellite_pos, level):
-    if level > 1:
-        for enemy_pos in enemy_list:
-            if detect_collision(enemy_pos, collector_pos, collector_size):
-                enemy_list.remove(enemy_pos)
-        
-    return hasCollision(enemy_list, satellite_pos, satellite_size)
-
-def hasCollision(enemy_list, object_pos, object_size):
+def cleanJunk(enemy_list):
     for enemy_pos in enemy_list:
-        if detect_collision(enemy_pos, object_pos, object_size):
+        if detect_collision(enemy_pos, collector_pos, collector_size):
+            enemy_list.remove(enemy_pos)
+    
+def hasCollisionWithSatellite(enemy_list):
+    for enemy_pos in enemy_list:
+        if detect_collision(enemy_pos, satellite_pos, satellite_size):
             return True
     return False
 
@@ -207,7 +204,10 @@ while True:
         label = myfont.render(text, 1, yellow)
         screen.blit(label,(width-200,height-40))
 
-        if collision_check(enemy_list, collector_pos, satellite_pos, level):
+        if level > 1: # only clear junk when level > 1
+            cleanJunk(enemy_list)
+
+        if hasCollisionWithSatellite(enemy_list):
             game_over=True
             break
 
