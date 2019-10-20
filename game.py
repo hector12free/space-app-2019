@@ -4,7 +4,7 @@ import sys
 from button import button
 
 # TODO add sound effects
-# TODO avoid game exit when game over
+# TODO enhancement: show buttons directly in play pages
 # TODO add transation page between levels
 
 # level 1 - basic; level 2 - with collector
@@ -131,43 +131,46 @@ def detect_collision(collector_pos, enemy_pos):
             return True
     return False
 
-def redrawWindow():
+def redrawWindow(continueBtn, quitBtn):
     screen.fill((255,255,255))
-    startBtn.draw(screen, (0,0,0))
+    continueBtn.draw(screen, (0,0,0))
     quitBtn.draw(screen, (0,0,0))
 
-stayAtHomePage = True
-startBtn = button(green, width/3, height*2/3, 120, 50, 'Start')
-quitBtn = button(red, width*2/3, height*2/3, 120, 50, 'Close')
+def drawTransitionPage(continueBtnText):
+    stayAtThisPage = True
+    continueBtn = button(green, width/3, height*2/3, 120, 50, continueBtnText)
+    quitBtn = button(red, width*2/3, height*2/3, 120, 50, 'Close')
 
-while stayAtHomePage:
-    redrawWindow()
-    pygame.display.update()
+    while stayAtThisPage:
+        redrawWindow(continueBtn, quitBtn)
+        pygame.display.update()
 
-    for event in pygame.event.get():
-        pos = pygame.mouse.get_pos()
-        if event.type == pygame.QUIT:
-            stayAtHomePage = False
-            pygame.quit()
-            quit()
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if startBtn.isOver(pos):
-                print("clicked the Button")
-                stayAtHomePage = False
-            elif quitBtn.isOver(pos):
-                print("user decided to quit the game")
-                stayAtHomePage = False
+        for event in pygame.event.get():
+            pos = pygame.mouse.get_pos()
+            if event.type == pygame.QUIT:
+                stayAtThisPage = False
                 pygame.quit()
                 quit()
-        if event.type == pygame.MOUSEMOTION:
-            if startBtn.isOver(pos):
-                startBtn.color = greenDark
-            else:
-                startBtn.color = green
-            if quitBtn.isOver(pos):
-                quitBtn.color = redDark
-            else:
-                quitBtn.color = red
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if continueBtn.isOver(pos):
+                    print("clicked the Button")
+                    stayAtThisPage = False
+                elif quitBtn.isOver(pos):
+                    print("user decided to quit the game")
+                    stayAtThisPage = False
+                    pygame.quit()
+                    quit()
+            if event.type == pygame.MOUSEMOTION:
+                if continueBtn.isOver(pos):
+                    continueBtn.color = greenDark
+                else:
+                    continueBtn.color = green
+                if quitBtn.isOver(pos):
+                    quitBtn.color = redDark
+                else:
+                    quitBtn.color = red
+
+drawTransitionPage("Start")
 
 while not game_over:
     for event in pygame.event.get():
@@ -208,3 +211,5 @@ while not game_over:
     clock.tick(30)
 
     pygame.display.update()
+
+drawTransitionPage("Next")
