@@ -13,8 +13,8 @@ https://2019.spaceappschallenge.org/challenges/stars/orbital-scrap-metal-the-vid
 * install pygame
 ```bash
 conda update conda
-conda install -c cogsci pygame
 conda create -n pygame python=2.7
+pip install pygame
 conda activate pygame
 ```
 
