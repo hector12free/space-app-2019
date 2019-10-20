@@ -3,7 +3,7 @@ import random
 import sys
 from button import button
 
-level = 1 # level 1 - basic; level 2 - with collector
+level = 2 # level 1 - basic; level 2 - with collector
 
 pygame.init()
 
@@ -21,15 +21,15 @@ greenDark = (28, 151, 139)
 background_color = (0,0,0)
 
 # Starship
-player_size = 50
-player_pos = [width/2, height-2*player_size]
+collector_size = 50
+collector_pos = [width/3, height-2*collector_size]
 collectorImg_filepath = 'images/LogoMakr_0rPhIj.png' 
 collectorImg = pygame.image.load(collectorImg_filepath)
 collectorImg = pygame.transform.rotozoom(collectorImg, 0, 0.125)
 
 # Satellite
 satellite_size = 50
-satellite_pos = [width/3, height-2*player_size]
+satellite_pos = [width/2, height-2*collector_size]
 satelliteImg_filepath = 'images/satellite.png' 
 satelliteImg = pygame.image.load(satelliteImg_filepath)
 satelliteImg = pygame.transform.rotozoom(satelliteImg, 0, 0.125)
@@ -101,10 +101,10 @@ def update_enemey_positions(enemy_list, score):
             # enemy_pos[0]= random.randint(0,width-enemy_size)
             # enemy_pos[1] = 0
 
-def collision_check(enemy_list, player_pos, satellite_pos, level):
+def collision_check(enemy_list, collector_pos, satellite_pos, level):
     if level == 1:
         for enemy_pos in enemy_list:
-            if detect_collision(enemy_pos, player_pos):
+            if detect_collision(enemy_pos, collector_pos):
                 return True
             return False
     elif level == 2:
@@ -114,15 +114,15 @@ def collision_check(enemy_list, player_pos, satellite_pos, level):
             return False
             
 
-def detect_collision(player_pos, enemy_pos):
-    p_x = player_pos[0]
-    p_y = player_pos[1]
+def detect_collision(collector_pos, enemy_pos):
+    p_x = collector_pos[0]
+    p_y = collector_pos[1]
 
     e_x= enemy_pos[0]
     e_y=enemy_pos[1]
 
-    if (e_x >= p_x and e_x < (p_x + player_size)) or (p_x >= e_x and p_x < (e_x+enemy_size)):
-        if (e_y >= p_y and e_y < (p_y + player_size)) or (p_y >= e_y and p_y < (e_y+enemy_size)):
+    if (e_x >= p_x and e_x < (p_x + collector_size)) or (p_x >= e_x and p_x < (e_x+enemy_size)):
+        if (e_y >= p_y and e_y < (p_y + collector_size)) or (p_y >= e_y and p_y < (e_y+enemy_size)):
             return True
     return False
 
@@ -170,15 +170,15 @@ while not game_over:
             sys.exit()
 
         if event.type == pygame.KEYDOWN:
-            x = player_pos[0]
-            y = player_pos[1]
+            x = collector_pos[0]
+            y = collector_pos[1]
 
             if event.key == pygame.K_LEFT:
-                x -= player_size
+                x -= collector_size
             elif event.key == pygame.K_RIGHT:
-                x += player_size
+                x += collector_size
 
-            player_pos = [x,y] 
+            collector_pos = [x,y] 
 
     screen.fill(background_color)
 
@@ -190,18 +190,15 @@ while not game_over:
     label = myfont.render(text, 1, yellow)
     screen.blit(label,(width-200,height-40))
 
-    if collision_check(enemy_list, player_pos, satellite_pos, level):
+    if collision_check(enemy_list, collector_pos, satellite_pos, level):
         game_over=True
         break
 
     draw_enemies(enemy_list)
 
-
-    #rect(surface, color, rect, width=0) -> Rect
-    # pygame.draw.rect(screen, red, (player_pos[0], player_pos[1], player_size, player_size))
-    collector(player_pos[0], player_pos[1])
+    satellite(satellite_pos[0], satellite_pos[1])
     if (level > 1):
-        satellite(satellite_pos[0], satellite_pos[1])
+        collector(collector_pos[0], collector_pos[1])
 
     clock.tick(30)
 
