@@ -42,7 +42,7 @@ collectorImg = pygame.transform.rotozoom(collectorImg, 0, 0.125)
 
 # Satellite
 satelliteSize = 50
-satellitePos = [width / 2, height - 2 * collectorSize]
+satellitePos = [width / 2 - satelliteSize / 2, height / 2 - satelliteSize / 2]
 satelliteImgFilePath = 'images/satellite.png' 
 satelliteImg = pygame.image.load(satelliteImgFilePath)
 satelliteImg = pygame.transform.rotozoom(satelliteImg, 0, 0.125)
