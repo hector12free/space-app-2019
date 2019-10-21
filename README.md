@@ -23,8 +23,7 @@ Note: https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-env
 # TODOs
 - [ ] add multiple satellites
 - [x] refractor: rename "collector" to "starship"
-- [ ] improve on starShip movement, make it (accelerate/decelerate) smoothly
-- [ ] make starShip change movement direction (making turns, like a shark eating fishes)
+- [ ] make starship change movement direction (making turns, like a shark eating fishes)
 - [ ] add title in home page
 - [ ] add game over score in game over page
 - [ ] enhancement: hover the buttons and score text over the game play scene directly, maybe with a semitransparent panel background
@@ -33,6 +32,10 @@ Note: https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-env
 * make space junks move in different directions with satellite in the centre of the map
 - [ ] make space junks move in different directions
 - [ ] satellite in the centre of the map
+
+* improve on starship movement
+- [ ] make it accelerate/decelerate smoothly
+- [ ] verify & work on UX (user experience) on touch screen mobile device
 
 * add sound effects
 - [ ] add collision sound effects: among satellite, starship and the space junk
