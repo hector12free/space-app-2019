@@ -22,7 +22,7 @@ Note: https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-env
 
 # TODOs
 - [ ] add multiple satellites
-- [ ] refractor: rename "collector" to "starShip"?
+- [x] refractor: rename "collector" to "starship"
 - [ ] improve on starShip movement, make it (accelerate/decelerate) smoothly
 - [ ] make starShip change movement direction (making turns, like a shark eating fishes)
 - [ ] add title in home page
@@ -35,7 +35,7 @@ Note: https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-env
 - [ ] satellite in the centre of the map
 
 * add sound effects
-- [ ] add collision sound effects: among satellite, collector and the space junk
+- [ ] add collision sound effects: among satellite, starship and the space junk
 - [ ] add a great background music for the game
 
 * update this document - README.md
