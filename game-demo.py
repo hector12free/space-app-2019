@@ -8,10 +8,10 @@ from button import button
 
 # TODO enhancements:
 # TODO show buttons directly in play pages
-# TODO display different satellites/collectors/junks
+# TODO display different satellites/starships/junks
 # TODO 
 
-# level 1 - basic; level 2 - with collector
+# level 1 - basic; level 2 - with starship
 level = 2 # TODO change it back
 
 pygame.init()
@@ -30,16 +30,16 @@ green = (36, 194, 179) # (0, 200, 0)
 greenDark = (28, 151, 139)
 background_color = (0,0,0)
 
-# Starship collector
-collector_size = 50
-collector_pos = [width/3, height-2*collector_size]
-collectorImg_filepath = 'images/LogoMakr_0rPhIj.png' 
-collectorImg = pygame.image.load(collectorImg_filepath)
-collectorImg = pygame.transform.rotozoom(collectorImg, 0, 0.125)
+# Starship starship
+starship_size = 50
+starship_pos = [width/3, height-2*starship_size]
+starshipImg_filepath = 'images/LogoMakr_0rPhIj.png' 
+starshipImg = pygame.image.load(starshipImg_filepath)
+starshipImg = pygame.transform.rotozoom(starshipImg, 0, 0.125)
 
 # Satellite
 satellite_size = 50
-satellite_pos = [width/2, height-2*collector_size]
+satellite_pos = [width/2, height-2*starship_size]
 satelliteImg_filepath = 'images/satellite.png' 
 satelliteImg = pygame.image.load(satelliteImg_filepath)
 satelliteImg = pygame.transform.rotozoom(satelliteImg, 0, 0.125)
@@ -63,15 +63,15 @@ clock = pygame.time.Clock()
 
 myfont = pygame.font.SysFont("monospace", 35)
 
-def initializeStates(collector_pos, satellite_pos, enemy_list):
-    collector_pos = [width/3, height-2*collector_size]
-    satellite_pos = [width/2, height-2*collector_size]
+def initializeStates(starship_pos, satellite_pos, enemy_list):
+    starship_pos = [width/3, height-2*starship_size]
+    satellite_pos = [width/2, height-2*starship_size]
 
     enemy_pos = [random.randint(0,width-enemy_size), 0]
     enemy_list=[enemy_pos]
 
-def drawCollector(x,y):
-    screen.blit(collectorImg,(x,y))
+def drawStarship(x,y):
+    screen.blit(starshipImg,(x,y))
 
 def drawSpaceJunk(x,y):
     screen.blit(spaceJunkImg,(x,y))
@@ -115,7 +115,7 @@ def update_enemey_positions(enemy_list, score):
 
 def cleanJunk(enemy_list):
     for enemy_pos in enemy_list:
-        if detect_collision(enemy_pos, collector_pos, collector_size):
+        if detect_collision(enemy_pos, starship_pos, starship_size):
             enemy_list.remove(enemy_pos)
     
 def hasCollisionWithSatellite(enemy_list):
@@ -184,19 +184,19 @@ while True:
                 sys.exit()
 
             if event.type == pygame.KEYDOWN:
-                x = collector_pos[0]
-                y = collector_pos[1]
+                x = starship_pos[0]
+                y = starship_pos[1]
 
                 if event.key == pygame.K_LEFT and x > speed:
-                    x -= collector_size
-                elif event.key == pygame.K_RIGHT and x < width - speed - collector_size:
-                    x += collector_size
+                    x -= starship_size
+                elif event.key == pygame.K_RIGHT and x < width - speed - starship_size:
+                    x += starship_size
                 elif event.key == pygame.K_UP and y > speed:
-                    y -= collector_size
-                elif event.key == pygame.K_DOWN and y < height - speed - collector_size:
-                    y += collector_size
+                    y -= starship_size
+                elif event.key == pygame.K_DOWN and y < height - speed - starship_size:
+                    y += starship_size
 
-                collector_pos = [x,y] 
+                starship_pos = [x,y] 
 
         screen.fill(background_color)
 
@@ -220,7 +220,7 @@ while True:
 
         drawSatellite(satellite_pos[0], satellite_pos[1])
         if (level > 1):
-            drawCollector(collector_pos[0], collector_pos[1])
+            drawStarship(starship_pos[0], starship_pos[1])
 
         clock.tick(30)
 
@@ -233,5 +233,5 @@ while True:
     game_over = False
     level += 1
     # score = 0
-    initializeStates(collector_pos, satellite_pos, enemy_list)
+    initializeStates(starship_pos, satellite_pos, enemy_list)
     print("next level: ", level)
