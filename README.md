@@ -21,12 +21,12 @@ pip install pygame
 Note: https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html
 
 # TODOs
-- [ ] avoid collision between satellite and collector
+- [ ] avoid collision between satellite and starship
 - [ ] make space junks move in different directions with satellite in the center of the map
 - [ ] add multiple satellites
-- [x] refractor: rename "collector" to "starShip"
-- [ ] improve on starShip movement, make it (accelerate/decelerate) smoothly
-- [ ] make starShip change movement direction (making turns, like a shark eating fishes)
+- [x] refractor: rename "collector" to "starship"
+- [ ] improve on starship movement, make it (accelerate/decelerate) smoothly
+- [ ] make starship change movement direction (making turns, like a shark eating fishes)
 
 # Reference
 * https://2019.spaceappschallenge.org/challenges/

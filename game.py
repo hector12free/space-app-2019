@@ -8,13 +8,13 @@ from button import button
 
 # TODO enhancements:
 # TODO show buttons directly in play pages
-# TODO display different satellites/collectors/junks
+# TODO display different satellites/starships/junks
 # TODO 
 
 # Set isDemoMode flag to True to only play with level 2, which is more interesting
 isDemoMode = True
 
-# level 1 - basic; level 2 - with collector to clean space junk
+# level 1 - basic; level 2 - with starship to clean space junk
 level = 2 if isDemoMode else 1
 
 pygame.init()
@@ -33,12 +33,12 @@ green = (36, 194, 179) # (0, 200, 0)
 greenDark = (28, 151, 139)
 backgroundColor = (0, 0, 0)
 
-# Starship collector
-collectorSize = 50
-collectorPos = [width / 3, height - 2 * collectorSize]
-collectorImgFilePath = 'images/LogoMakr_0rPhIj.png' 
-collectorImg = pygame.image.load(collectorImgFilePath)
-collectorImg = pygame.transform.rotozoom(collectorImg, 0, 0.125)
+# Starship starship
+starshipSize = 50
+starshipPos = [width / 3, height - 2 * starshipSize]
+starshipImgFilePath = 'images/LogoMakr_0rPhIj.png' 
+starshipImg = pygame.image.load(starshipImgFilePath)
+starshipImg = pygame.transform.rotozoom(starshipImg, 0, 0.125)
 
 # Satellite
 satelliteSize = 50
@@ -66,15 +66,15 @@ clock = pygame.time.Clock()
 
 myfont = pygame.font.SysFont("monospace", 35)
 
-def initializeStates(collectorPos, satellitePos, enemyList):
-    collectorPos = [width / 3, height - 2 * collectorSize]
-    satellitePos = [width / 2, height - 2 * collectorSize]
+def initializeStates(starshipPos, satellitePos, enemyList):
+    starshipPos = [width / 3, height - 2 * starshipSize]
+    satellitePos = [width / 2, height - 2 * starshipSize]
 
     enemyPos = [random.randint(0, width - enemySize), 0]
     enemyList = [enemyPos]
 
-def drawCollector(x, y):
-    screen.blit(collectorImg, (x, y))
+def drawStarship(x, y):
+    screen.blit(starshipImg, (x, y))
 
 def drawSpaceJunk(x, y):
     screen.blit(spaceJunkImg, (x, y))
@@ -118,7 +118,7 @@ def updateEnemeyPositions(enemyList, score):
 
 def cleanJunk(enemyList):
     for enemyPos in enemyList:
-        if detectCollision(enemyPos, collectorPos, collectorSize):
+        if detectCollision(enemyPos, starshipPos, starshipSize):
             enemyList.remove(enemyPos)
     
 def hasCollisionWithSatellite(enemyList):
@@ -187,19 +187,19 @@ while True:
                 sys.exit()
 
             if event.type == pygame.KEYDOWN:
-                x = collectorPos[0]
-                y = collectorPos[1]
+                x = starshipPos[0]
+                y = starshipPos[1]
 
                 if event.key == pygame.K_LEFT and x > speed:
-                    x -= collectorSize
-                elif event.key == pygame.K_RIGHT and x < width - speed - collectorSize:
-                    x += collectorSize
+                    x -= starshipSize
+                elif event.key == pygame.K_RIGHT and x < width - speed - starshipSize:
+                    x += starshipSize
                 elif event.key == pygame.K_UP and y > speed:
-                    y -= collectorSize
-                elif event.key == pygame.K_DOWN and y < height - speed - collectorSize:
-                    y += collectorSize
+                    y -= starshipSize
+                elif event.key == pygame.K_DOWN and y < height - speed - starshipSize:
+                    y += starshipSize
 
-                collectorPos = [x,y] 
+                starshipPos = [x,y] 
 
         screen.fill(backgroundColor)
 
@@ -222,7 +222,7 @@ while True:
 
         drawSatellite(satellitePos[0], satellitePos[1])
         if (level > 1):
-            drawCollector(collectorPos[0], collectorPos[1])
+            drawStarship(starshipPos[0], starshipPos[1])
 
         clock.tick(30)
 
@@ -235,5 +235,5 @@ while True:
     gameOver = False
     level += 1
     # score = 0
-    initializeStates(collectorPos, satellitePos, enemyList)
+    initializeStates(starshipPos, satellitePos, enemyList)
     print("next level: ", level)
